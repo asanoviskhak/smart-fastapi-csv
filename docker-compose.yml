@@ -1,0 +1,54 @@
+version: "3.9"  
+  
+services:  
+  fastapi_service:  
+    build:  
+      context: ./  
+      dockerfile: Dockerfile  
+    hostname: fastapi_service  
+    container_name: fastapi_service  
+    depends_on:  
+      - db  
+    ports:  
+      - "8000:8000"  
+    env_file:  
+      - .env  
+    volumes:  
+      - ./:/home/app  
+    networks:  
+      - my-net  
+  
+  db:
+    image: postgres
+    container_name: local_pgdb
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: smartbiz
+      POSTGRES_PASSWORD: Smartbiz123!
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+    networks:  
+      - my-net
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: asanov.personal@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: Smartbiz123!
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:  
+      - my-net
+
+volumes:
+  local_pgdata:
+  pgadmin-data:
+  
+networks:  
+  my-net:  
+    external: true
