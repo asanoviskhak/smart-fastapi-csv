@@ -2,7 +2,7 @@ from fastapi import FastAPI, status
   
 from core.config import settings  
 from api.router import router  
-from db.sessions import create_tables  
+from db.sessions import create_tables, upload_to_tables
   
   
 app = FastAPI(  
@@ -23,19 +23,22 @@ async def root():
   
   
 @app.get(  
+    "/upload_to_tables_journals",  
+    status_code=status.HTTP_200_OK,  
+    name="upload_to_tables_journals"  
+)
+
+async def upload_to_tables_journals():  
+    upload_to_tables()
+
+
+@app.get(  
     "/init_tables",  
     status_code=status.HTTP_200_OK,  
     name="init_tables"  
 )
 
-@app.get(  
-    "/upload_to_tables",  
-    status_code=status.HTTP_200_OK,  
-    name="upload_to_tables"  
-)
+
 
 async def init_tables():  
-    create_tables()
-    
-async def upload_to_tables():  
     create_tables()

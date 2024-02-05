@@ -14,7 +14,10 @@ services:
     env_file:  
       - .env  
     volumes:  
-      - ./:/home/app  
+      - ./:/home/app
+      - type: bind
+        source: ////./pipe/docker_engine_mutagen
+        target: /mnt/z
     networks:  
       - my-net  
   
@@ -48,7 +51,7 @@ services:
 volumes:
   local_pgdata:
   pgadmin-data:
-  
+
 networks:  
   my-net:  
     external: true
