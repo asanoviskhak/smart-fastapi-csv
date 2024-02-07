@@ -1,28 +1,8 @@
 version: "3.9"  
   
 services:  
-  fastapi_service:  
-    build:  
-      context: ./  
-      dockerfile: Dockerfile  
-    hostname: fastapi_service  
-    container_name: fastapi_service  
-    depends_on:  
-      - db  
-    ports:  
-      - "8000:8000"  
-    env_file:  
-      - .env  
-    volumes:  
-      - ./:/home/app
-      - type: bind
-        source: ////./pipe/docker_engine_mutagen
-        target: /mnt/z
-    networks:  
-      - my-net  
-  
   db:
-    image: postgres
+    image: postgres:16-alpine
     container_name: local_pgdb
     restart: always
     ports:

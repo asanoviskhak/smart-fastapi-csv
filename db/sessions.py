@@ -21,6 +21,7 @@ def parse_none(dt):
 
 
 def prepare_journal(row):
+    print('row', row)
     return Journal(**row)
  
 def create_journal(data):
@@ -30,25 +31,27 @@ def create_journal(data):
     
   
 
-path_to_file = "/mnt/z"
+path_to_file = "Z:/26.12.23_Journal.csv"
 print(path_to_file)
-print(os.listdir(path_to_file))
-
 
 
 # read from csv file and create a journal entry
 def upload_to_tables():
-    print('uploading to tables')
     journals = []
-    with open(file=path_to_file, mode="r+") as csv_file:
+    with open(file=path_to_file, encoding="utf-8", mode="r+") as csv_file:
         csvreader = csv.DictReader(f=csv_file, delimiter=';', quotechar='"')
         for row in csvreader:
+            
+            if (row['TRX_NO'] == None):
+                continue
+            
             row['BUSINESS_DATE'] = parse_none(row['BUSINESS_DATE'])
-            row['BUSINESS_TIME'] = parse_none(row['BUSINESS_TIME'])
             row['BUSINESS_FORMAT_DATE'] = parse_none(row['BUSINESS_FORMAT_DATE'])
             row['EXP_DATE'] = parse_none(row['EXP_DATE'])
+            
             journals.append(prepare_journal(row))
-    create_journal(journals)
+        create_journal(journals)
+    
 
     
   

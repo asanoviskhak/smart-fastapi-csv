@@ -3,7 +3,8 @@ from fastapi import FastAPI, status
 from core.config import settings  
 from api.router import router  
 from db.sessions import create_tables, upload_to_tables
-  
+import uvicorn
+
   
 app = FastAPI(  
     title=settings.title,  

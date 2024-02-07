@@ -49,8 +49,8 @@ from datetime import datetime
 
 class JournalBase(SQLModel):
     IS_INTERNAL_YN: str = Field(nullable=False)
-    INTERNAL_DEBIT: int = Field(nullable=False)
-    INTERNAL_CREDIT: float = Field(nullable=False)
+    INTERNAL_DEBIT: int = Field(nullable=True)
+    INTERNAL_CREDIT: float = Field(nullable=True)
     FIRST: str = Field(nullable=True)
     FIRST_DEBIT: int = Field(nullable=True)
     FIRST_CREDIT: float = Field(nullable=True)
@@ -62,13 +62,13 @@ class JournalBase(SQLModel):
     THIRD_CREDIT: float = Field(nullable=True)
     EXP_DATE: str = Field(nullable=True)
     RECEIPT_NO: str = Field(nullable=True)
-    GUEST_FULL_NAME: str = Field(nullable=False)
+    GUEST_FULL_NAME: str = Field(nullable=True)
     TARGET_RESORT: str = Field(nullable=True)
     TRX_DESC: str = Field(nullable=False)
     MARKET_CODE: str = Field(nullable=False)
     BUSINESS_FORMAT_DATE: datetime = Field(nullable=False)
-    BUSINESS_TIME: str = Field(nullable=False)
-    BUSINESS_DATE: str = Field(nullable=False)
+    BUSINESS_TIME: str = Field(nullable=True)
+    BUSINESS_DATE: str = Field(nullable=True)
     REFERENCE: str = Field(nullable=True)
     TRX_NO: int = Field(
         primary_key=True,
@@ -84,7 +84,7 @@ class JournalBase(SQLModel):
     CASHIER_ID: int = Field(nullable=False)
     REMARK: str = Field(nullable=True)
     INSERT_USER: int = Field(nullable=False)
-    INSERT_DATE: datetime = Field(nullable=False)
+    INSERT_DATE: datetime = Field(nullable=True)
     CHEQUE_NUMBER: float = Field(nullable=True)
     ROOM_CLASS: str = Field(nullable=False)
     CC_CODE: str = Field(nullable=True)
