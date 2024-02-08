@@ -24,13 +24,9 @@ $initialTry = Invoke-CheckAndSync
 if (-not $initialTry) {
     # Step 3: If initial check/sync fails, start the FastAPI app
     Write-Host "Attempting to start the FastAPI server..."
-    Start-Job -ScriptBlock {
-        Set-Location "C:\Users\User\powerbi\fast-ps-app"
-        uvicorn main:app --port 8000
-    }
-    Write-Host "Server started successfully."
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile", "-Command", "& {cd 'C:\Users\User\powerbi\fast-ps-app'; uvicorn main:app --port 8000}" -WindowStyle Hidden
     Start-Sleep -Seconds 15 # Give some time for the server to start
-
+    Write-Host "Server started successfully."
     # After starting the server, retry steps 1 and 2
     Write-Host "Retrying check and sync after starting the server..."
     $retryAttempt = Invoke-CheckAndSync

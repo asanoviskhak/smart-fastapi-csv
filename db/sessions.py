@@ -54,7 +54,6 @@ trial_balances_name = "trial_balance"
 
 def upload_to_tables():
     dir_files = os.listdir("Z:/")
-    print(dir_files)
     journals = []
     manager_reports = []
     trial_balances = []
