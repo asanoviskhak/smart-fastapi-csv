@@ -11,10 +11,10 @@ class GlobalConfig(BaseConfig):
     version: str = "1.0.0"
     description: str = os.environ.get("DESCRIPTION")
     openapi_prefix: str = os.environ.get("OPENAPI_PREFIX")
-    docs_url: str = "/docs"
-    redoc_url: str = "/redoc"
-    openapi_url: str = "/openapi.json"
-    api_prefix: str = "/api"
+    docs_url: str = "/internal/docs"
+    redoc_url: str = "/internal/redoc"
+    openapi_url: str = "/internal/openapi.json"
+    api_prefix: str = "/smart-api"
     debug: bool = os.environ.get("DEBUG")
     postgres_user: str = os.environ.get("POSTGRES_USER")
     postgres_password: str = os.environ.get("POSTGRES_PASSWORD")

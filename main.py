@@ -3,7 +3,6 @@ from fastapi import FastAPI, status
 from core.config import settings  
 from api.router import router  
 from db.sessions import create_tables, upload_to_tables
-import uvicorn
 
   
 app = FastAPI(  
@@ -22,24 +21,6 @@ app.include_router(router, prefix=settings.api_prefix)
 async def root():  
     return {"Say": "Hello!"}  
   
-  
-@app.get(  
-    "/upload_to_tables_journals",  
-    status_code=status.HTTP_200_OK,  
-    name="upload_to_tables_journals"  
-)
-
-async def upload_to_tables_journals():  
-    upload_to_tables()
-
-
-@app.get(  
-    "/init_tables",  
-    status_code=status.HTTP_200_OK,  
-    name="init_tables"  
-)
-
-
-
-async def init_tables():  
-    create_tables()
+@app.get("/check_system", status_code=status.HTTP_200_OK)
+def check_system():  
+    return "OK"
