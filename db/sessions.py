@@ -14,8 +14,36 @@ engine = create_engine(
     echo=settings.db_echo_log,  
 )  
 
-def parse_none(dt):
+months = {
+        "JAN": 1,
+        "FEB": 2,
+        "MAR": 3,
+        "APR": 4,
+        "MAY": 5,
+        "JUN": 6,
+        "JUL": 7,
+        "AUG": 8,
+        "SEP": 9,
+        "OCT": 10,
+        "NOV": 11,
+        "DEC": 12
+    }
+    
+
+def parse_none(dt, default=None, words=None):
     try:
+        if default:
+            day = dt[0:2]
+            month = dt[3:5]
+            year = "20" + dt[6:8]
+            return datetime(int(year), int(month), int(day))
+        
+        if words:
+            splitted = dt.split("-")
+            day = splitted[0]
+            month = months[splitted[1]]
+            year = "20" + splitted[2]
+            return datetime(int(year), int(month), int(day))
         return parse(dt)
     except:
         return None
@@ -41,9 +69,19 @@ def move_processed_files(processed_files):
         os.rename("Z:/" + file, "Z:/processed/" + file)
 
 def get_date_from_file_name(file_name):
-    date = file_name[0:8]
     try:
-        return parse(date)
+        char_at_10 = file_name[9]
+        if char_at_10.isdigit():
+            date = file_name[0:10]
+            day = date[0:2]
+            month = date[3:5]
+            year =  date[6:10]
+            return datetime(int(year), int(month), int(day))
+        date = file_name[0:8]
+        day = date[0:2]
+        month = date[3:5]
+        year = "20" + date[6:8]
+        return datetime(int(year), int(month), int(day))
     except:
         return None
     
@@ -67,8 +105,8 @@ def upload_to_tables():
                     for row in csvreader:
                         if (row['TRX_NO'] == None):
                             continue
-                        row['BUSINESS_DATE'] = parse_none(row['BUSINESS_DATE'])
-                        row['BUSINESS_FORMAT_DATE'] = parse_none(row['BUSINESS_FORMAT_DATE'])
+                        row['BUSINESS_DATE'] = parse_none(row['BUSINESS_DATE'], False, True)
+                        row['BUSINESS_FORMAT_DATE'] = parse_none(row['BUSINESS_FORMAT_DATE'], True)
                         row['EXP_DATE'] = parse_none(row['EXP_DATE'])
                         
                         journals.append(prepare_journal(row))
@@ -89,7 +127,7 @@ def upload_to_tables():
                         if row["TRX_TYPE_SORT"] == None or row["TRX_TYPE_SORT"] == "" or not row["TRX_TYPE_SORT"].isdigit():
                             break
                         
-                        row["TRX_DATE"] = parse_none(row["TRX_DATE"])
+                        row["TRX_DATE"] = parse_none(row["TRX_DATE"], False, True)
                         trial_balances.append(prepare_trial_balance(row))
                     processed_files.append(file)
                     
