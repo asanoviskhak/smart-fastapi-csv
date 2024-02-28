@@ -3,7 +3,6 @@ import os
 from sqlmodel import SQLModel, create_engine, Session  
 from dateutil.parser import parse
 from core.config import settings  
-from db.tables.base_class import SQLModel
 from db.tables.journal import Journal  
 from db.tables.manager_report import ManagerReport
 from db.tables.trial_balance import TrialBalance
@@ -102,13 +101,16 @@ def upload_to_tables():
             with open(file=path_to_file, encoding="utf-8", mode="r+") as csv_file:
                 csvreader = csv.DictReader(f=csv_file, delimiter=';', quotechar='"')
                 if file.lower().find(journals_name) != -1:
+                    count = 0
                     for row in csvreader:
-                        if (row['TRX_NO'] == None):
+                        if (row['TRX_NO'] == None or row['TRX_NO'] == ''):
                             continue
                         row['BUSINESS_DATE'] = parse_none(row['BUSINESS_DATE'], False, True)
                         row['BUSINESS_FORMAT_DATE'] = parse_none(row['BUSINESS_FORMAT_DATE'], True)
                         row['EXP_DATE'] = parse_none(row['EXP_DATE'])
-                        
+                        count += 1
+                        print('\n')
+                        print('row', count, row)
                         journals.append(prepare_journal(row))
                     processed_files.append(file)
                         
@@ -139,11 +141,11 @@ def upload_to_tables():
             
             if len(trial_balances) > 0:
                 create_multiple_entry(trial_balances)
-    
-    move_processed_files(processed_files)
+            move_processed_files(processed_files)
+            processed_files = []
     
     
   
 def create_tables():  
-    SQLModel.metadata.drop_all(engine)  
+    SQLModel.metadata.drop_all(engine)
     SQLModel.metadata.create_all(engine)

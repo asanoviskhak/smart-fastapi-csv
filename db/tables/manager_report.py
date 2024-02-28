@@ -31,4 +31,4 @@ class ManagerReportBase(SQLModel):
     REPORT_DATE: datetime = Field(nullable=True)
     
 class ManagerReport(ManagerReportBase, UUIDModel, table=True):
-    __tablename__ = "manager_report"
+    __tablename__ = "manager_report" # type: ignore

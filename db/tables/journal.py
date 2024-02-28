@@ -1,5 +1,6 @@
 from sqlmodel import Field, SQLModel
 from datetime import datetime
+from db.tables.base_class import UUIDModel
 
 class JournalBase(SQLModel):
     IS_INTERNAL_YN: str = Field(nullable=True)
@@ -24,32 +25,28 @@ class JournalBase(SQLModel):
     BUSINESS_TIME: str = Field(nullable=True)
     BUSINESS_DATE: str = Field(nullable=True)
     REFERENCE: str = Field(nullable=True)
-    TRX_NO: int = Field(
-        primary_key=True,
-        index=True,
-        nullable=False,
-    )
-    CASHIER_DEBIT: float = Field(nullable=False)
-    CASHIER_CREDIT: float = Field(nullable=False)
+    TRX_NO: int = Field(nullable=False)
+    CASHIER_DEBIT: float = Field(nullable=True)
+    CASHIER_CREDIT: float = Field(nullable=True)
     ROOM: int = Field(nullable=True)
     CREDIT_CARD_SUPPLEMENT: str = Field(nullable=True)
     CURRENCY1: str = Field(nullable=True)
-    TRX_CODE: int = Field(nullable=False)
+    TRX_CODE: int = Field(nullable=True)
     CASHIER_ID: int = Field(nullable=True)
     REMARK: str = Field(nullable=True)
-    INSERT_USER: int = Field(nullable=False)
+    INSERT_USER: int = Field(nullable=True)
     INSERT_DATE: datetime = Field(nullable=True)
-    CHEQUE_NUMBER: float = Field(nullable=True)
-    ROOM_CLASS: str = Field(nullable=False)
+    CHEQUE_NUMBER: str = Field(nullable=True)
+    ROOM_CLASS: str = Field(nullable=True)
     CC_CODE: str = Field(nullable=True)
     CASHIER_NAME: str = Field(nullable=True)
-    USER_NAME: str = Field(nullable=False)
-    DEP_NET_TAX_AMT: float = Field(nullable=False)
-    DEPOSIT_DEBIT: float = Field(nullable=False)
-    CASH_ID_USER_NAME: str = Field(nullable=False)
-    PRINT_CASHIER_DEBIT: float = Field(nullable=False)
-    PRINT_CASHIER_CREDIT: float = Field(nullable=False)
+    USER_NAME: str = Field(nullable=True)
+    DEP_NET_TAX_AMT: float = Field(nullable=True)
+    DEPOSIT_DEBIT: float = Field(nullable=True)
+    CASH_ID_USER_NAME: str = Field(nullable=True)
+    PRINT_CASHIER_DEBIT: float = Field(nullable=True)
+    PRINT_CASHIER_CREDIT: float = Field(nullable=True)
    
     
-class Journal(JournalBase, table=True):
-    __tablename__ = "journal"
+class Journal(JournalBase, UUIDModel, table=True):
+    __tablename__ = "journal" # type: ignore

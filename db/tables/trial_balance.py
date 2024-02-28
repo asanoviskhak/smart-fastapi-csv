@@ -2,55 +2,6 @@ from sqlmodel import Field, SQLModel
 from datetime import datetime
 from db.tables.base_class import UUIDModel
 
-
-# CREATE TABLE "trial_balance" (
-#   "TRX_TYPE_SORT" bigint,
-#   "TRX_TYPE" text,
-#   "TRX_TYPE_DESCRIPTION" text,
-#   "IS_TB_TRX_TYPE_01" bigint,
-#   "CS_TB_AMOUNT_TYPE" double precision,
-#   "TRX_CODE_SORT" bigint,
-#   "TRX_CODE" bigint,
-#   "DESCRIPTION" text,
-#   "TB_AMOUNT" double precision,
-#   "TRX_DATE" text,
-#   "NET_AMOUNT" double precision,
-#   "GUEST_LED_DEBIT" text NULL,
-#   "GUEST_LED_CREDIT" text NULL,
-#   "AR_LED_DEBIT" bigint,
-#   "AR_LED_CREDIT" text NULL,
-#   "DEP_LED_DEBIT" double precision NULL,
-#   "DEP_LED_CREDIT" text NULL,
-#   "PACKAGE_LED_DEBIT" double precision NULL,
-#   "PACKAGE_LED_CREDIT" text NULL,
-#   "INH_DEBIT" bigint,
-#   "INH_CREDIT" bigint,
-#   "NON_REVENUE_AMT" double precision,
-#   "TODAYS_ACCRUALS" double precision,
-#   "DEPOSIT_AT_CHECKIN" text NULL,
-#   "PACKAGE_LED_TAX" bigint NULL,
-#   "DEP_TAX_LED_DEBIT" bigint,
-#   "OWNER_LED_DEBIT" bigint,
-#   "OWNER_LED_CREDIT" text NULL,
-#   "DEP_LED_DEBIT_PL_CZ" bigint,
-#   "CS_CURRENCY_COUNT" bigint,
-#   "C_TRX_CODE" text,
-#   "C_RESORT" text,
-#   "C_TRX_DATE" text,
-#   "C_TB_AMOUNT_NET" text,
-#   "C_DISP_CURRENCY" text,
-#   "C_GUEST_LED_CREDIT" text,
-#   "C_GL_DISP_CURRENCY" text,
-#   "C_AR_LED_CREDIT" text,
-#   "C_AR_DISP_CURRENCY" text,
-#   "C_DEP_LED_CREDIT" text,
-#   "C_DL_DISP_CURRENCY" text,
-#   "C_INH_LED_CREDIT" text,
-#   "C_IH_DISP_CURRENCY" text,
-#   "C_OWNER_LED_CREDIT" text,
-#   "C_OWNER_DISP_CURRENCY" text
-# );
-
 class TrialBalanceBase(SQLModel):
     TRX_TYPE_SORT: int = Field(nullable=False)
     TRX_TYPE: str = Field(nullable=False)
@@ -101,4 +52,4 @@ class TrialBalanceBase(SQLModel):
     
     
 class TrialBalance(TrialBalanceBase, UUIDModel, table=True):
-    __tablename__ = "trial_balance"
+    __tablename__ = "trial_balance" # type: ignore
