@@ -24,7 +24,9 @@ $initialTry = Invoke-CheckAndSync
 if (-not $initialTry) {
     # Step 3: If initial check/sync fails, start the FastAPI app
     Write-Host "Attempting to start the FastAPI server..."
-    Start-Process -FilePath "powershell.exe" -ArgumentList "-NoProfile", "-Command", "& {cd 'C:\Users\User\powerbi\fast-ps-app'; uvicorn main:app --port 8000}" -WindowStyle Hidden
+    Start-Process -FilePath "powershell" -ArgumentList "-Command", "& {cd 'C:\Users\User\powerbi\fast-ps-app'; c:\users\user\appdata\local\programs\python\python311\python.exe main.py}" -NoNewWindow
+    # Start-Process nohup 
+    
     Start-Sleep -Seconds 15 # Give some time for the server to start
     Write-Host "Server started successfully."
     # After starting the server, retry steps 1 and 2
